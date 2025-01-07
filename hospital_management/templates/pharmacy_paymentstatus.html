@@ -1,0 +1,63 @@
+{% extends 'pharmacy_base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .btn-custom {
+        background-color: #257180;
+        color: white;
+        border: none;
+        border-radius: 50px; /* Makes the button pill-shaped */
+        padding: 10px 20px; /* Adjust padding for better appearance */
+        transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition effect */
+    }
+
+    .btn-custom:hover {
+        background-color: #003C43;
+        transform: scale(1.05); /* Slight scaling effect on hover */
+    }
+</style>
+
+<!-- Payment Status Section -->
+<section class="page-title bg-1">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">Payment Status</span>
+          <h1 class="text-capitalize mb-5 text-lg">Payment Status Update</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Payment Result Section -->
+<section class="section doctors">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 text-center">
+        <div class="section-title">
+          {% if status == True %}
+            <h3 class="text-success mb-4">
+              <i class="fa-solid fa-check-circle"></i> Payment Successful
+            </h3>
+            <p class="text-muted">Your payment has been successfully processed. Thank you for your order!</p>
+          {% else %}
+            <h3 class="text-danger mb-4">
+              <i class="fa-solid fa-times-circle"></i> Payment Failed
+            </h3>
+            <p class="text-muted">Something went wrong with the payment. Please try again.</p>
+          {% endif %}
+        </div>
+        <!-- Optional button to go back or retry -->
+        <div class="mt-4">
+          <a href="{% url 'pharmacy:category' %}" class="btn btn-custom btn-lg">Go to Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

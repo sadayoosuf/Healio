@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="page-title bg-primary">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">ADD DOCTORS</span>
+          <h1 class="text-capitalize mb-5 text-lg">enlarge your hospital</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <div class="appoinment-wrap mt-5 pl-lg-5">
+          <h2 class="mb-2 title-color">Add doctors to your Hospital</h2>
+          <p class="mb-4">Fill in the form below to add Departments. Ensure all fields are completed correctly.</p>
+
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="row">
+              <!-- Username field in one line -->
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label">Doctor Name(Username)</label>
+                  <input type="text" class="form-control" name="n" placeholder="Enter Doctor name">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">First Name</label>
+                  <input type="text" class="form-control" name="f" placeholder="Enter first name">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Last Name</label>
+                  <input type="text" class="form-control" name="l" placeholder="Enter last name">
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label" >Description</label>
+                  <textarea class="form-control"  name="d" rows="4" required>add description here</textarea>
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label">Upload Image</label>
+                  <input type="file" class="form-control" name="i">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" name="e" placeholder="Enter email">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Phone</label>
+                  <input type="number" class="form-control" name="p" placeholder="Enter phone number">
+                </div>
+              </div>
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Specialization</label>
+                  <input type="text" class="form-control" name="s" placeholder="Enter specialization">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Department</label>
+                    <select  name="d">
+                      <option value="" >Select a Department</option>
+                      {% for i in links %}
+                        <option value="{{ i.name }}">{{ i.name }}</option>
+                      {% endfor %}
+                    </select>
+                </div>
+              </div>
+              
+
+            <button type="submit" class="btn btn-main btn-round-full">Add Doctors</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

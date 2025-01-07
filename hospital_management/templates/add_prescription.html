@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="page-title bg-1">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">Add Prescription</span>
+          <h1 class="text-capitalize mb-5 text-lg">Prescription for {{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Prescription Form Section -->
+<section class="section appoinment">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="mt-3">
+          <div class="feature-icon mb-3">
+            <i class="icofont-support text-lg"></i>
+          </div>
+          <span class="h3">Call for an Emergency Service!</span>
+          <h2 class="text-color mt-3">94 00 130 233 </h2>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5">
+          <h2 class="mb-2 title-color">Add Prescription</h2>
+          <p class="mb-4">Fill out the details below to provide a prescription for {{ appointment.patient.first_name }} {{ appointment.patient.last_name }}.</p>
+
+          <form method="post">
+            {% csrf_token %}
+            <div class="row">
+              <!-- Admission Required Checkbox -->
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="admission_required">Admission Required:</label>
+                  <input type="checkbox" id="admission_required" name="admission_required" class="form-control">
+                </div>
+              </div>
+
+              <!-- Revisit Required Checkbox -->
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="revisit_required">Revisit Required:</label>
+                  <input type="checkbox" id="revisit_required" name="revisit_required" class="form-control">
+                </div>
+              </div>
+
+              <!-- Lab Tests Textarea -->
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label for="lab_tests">Lab Tests:</label>
+                  <textarea id="lab_tests" name="lab_tests" rows="4" class="form-control"></textarea>
+                </div>
+              </div>
+
+              <!-- Medication Details Textarea -->
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label for="medication_details">Medication Details:</label>
+                  <textarea id="medication_details" name="medication_details" rows="4" class="form-control" required></textarea>
+                </div>
+              </div>
+
+              <!-- Dosage Instructions Textarea -->
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label for="dosage_instructions">Dosage Instructions:</label>
+                  <textarea id="dosage_instructions" name="dosage_instructions" rows="4" class="form-control" required></textarea>
+                </div>
+              </div>
+
+              <!-- Prescription Amount Input -->
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="prescription_amount">Prescription Amount:</label>
+                  <input type="number" id="prescription_amount" name="prescription_amount" class="form-control" required>
+                </div>
+              </div>
+
+
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-main btn-round-full">Add Prescription</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

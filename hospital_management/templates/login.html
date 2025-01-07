@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="page-title bg-primary">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">Login to Your Account</span>
+          <h1 class="text-capitalize mb-5 text-lg">Login</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-4">
+        <div class="login-wrap mt-5">
+          <h2 class="mb-2 title-color text-center">Login to your Account</h2>
+          <p class="mb-4 text-center">Enter your credentials to access the panel.</p>
+
+          <form method="POST">
+            {% csrf_token %}
+
+            <!-- Username field -->
+            <div class="form-group">
+              <label class="form-label">Username</label>
+              <input type="text" class="form-control" name="u" placeholder="Enter username">
+            </div>
+
+            <!-- Password field -->
+            <div class="form-group">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control" name="p" placeholder="Enter password">
+            </div>
+
+            <!-- Login Button -->
+            <button type="submit" class="btn btn-main btn-round-full w-100">Login</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

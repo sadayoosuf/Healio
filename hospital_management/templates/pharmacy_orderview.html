@@ -1,0 +1,72 @@
+{% extends 'pharmacy_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Page Title Section -->
+<section class="page-title bg-1">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">Your Orders</span>
+          <h1 class="text-capitalize mb-5 text-lg">Order History</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Orders Section -->
+<section class="section doctors">
+  <div class="container">
+    <!-- Section Title -->
+    <div class="row justify-content-center">
+      <div class="col-lg-6 text-center">
+        <div class="section-title">
+          <h2>Your Orders</h2>
+          <div class="divider mx-auto my-4"></div>
+          <p>Here’s a list of your recent orders and their status. Stay updated with your delivery details.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Orders Card Display (One card per row) -->
+    <div class="row">
+      {% for i in orders %}
+      <div class="col-12 mb-4"> <!-- Full-width card -->
+        <div class="card mb-3" style="max-width: 100%;">
+          <div class="row g-0">
+            <!-- Medicine Image Section -->
+            <div class="col-md-4">
+              <img src="{{ i.medicine.image.url }}" class="img-fluid rounded-start" alt="medicine-image" style="height: 100%; object-fit: cover;">
+            </div>
+            <!-- Card Body Section with Order Details -->
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title" style="color:#257180;">{{ i.medicine.name }}</h5>
+                <ul class="list-unstyled">
+                  <li><strong>Price:</strong> ₹{{ i.medicine.price }}</li>
+                  <li><strong>Quantity:</strong> {{ i.no_of_items }}</li>
+                  <li><strong>Delivery Address:</strong> {{ i.address }}</li>
+                  <li><strong>Phone:</strong> {{ i.phone_no }}</li>
+                  <li><strong>Ordered On:</strong> {{ i.ordered_date }}</li>
+                  <li><strong>Delivery Status:</strong>
+                    <span class="{% if i.delivery_status == 'delivered' %}text-success{% else %}text-danger{% endif %}">
+                      {{ i.delivery_status|capfirst }}
+                    </span>
+                  </li>
+                </ul>
+                <p class="card-text"><small class="text-muted">Last updated: {{ i.ordered_date|date:"Y-m-d H:i" }}</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+.table th, .table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table thead th {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.table tbody td {
+    color: #000000;
+    font-size: 14px;
+}
+
+/* Custom Button Styles */
+.custom-btn {
+    background-color: #003C43; /* Initial color */
+    color: white; /* Text color */
+    padding: 5px 15px; /* Small button size */
+    border-radius: 50px; /* Pill shape */
+    font-size: 14px; /* Smaller font */
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.custom-btn:hover {
+    background-color: #257180; /* teal color on hover */
+    color: white; /* Ensure text stays white */
+}
+
+</style>
+
+<section class="page-title bg-1">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">Manage Your Appointments</span>
+          <h1 class="text-capitalize mb-5 text-lg">Doctor's Appointments</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section doctors">
+  <div class="container">
+      <div class="row justify-content-center">
+          <div class="col-lg-6 text-center">
+              <div class="section-title">
+                  <h2>Your Appointments</h2>
+                  <div class="divider mx-auto my-4"></div>
+                  <p>Here you can manage all appointments with your patients. You can confirm or cancel appointments as needed. This page also provides detailed information about the patient, department, date, time, and the status of each appointment.</p>
+              </div>
+          </div>
+      </div>
+
+      {% if appointments %}
+      <div class="table-responsive">
+          <table class="table table-striped table-hover">
+              <thead style="background-color: #257180; color: white;">
+                  <tr>
+                      <th>#</th>
+                      <th>Patient</th>
+                      <th>Department</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for appointment in appointments %}
+                  <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <td>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</td>
+                      <td>{{ appointment.department.name }}</td>
+                      <td>{{ appointment.date }}</td>
+                      <td>{{ appointment.time }}</td>
+                      <td>
+                          {% if appointment.status == "Pending" %}
+                          <span class="badge bg-warning text-dark">{{ appointment.status }}</span>
+                          {% elif appointment.status == "Confirmed" %}
+                          <span class="badge bg-success text-dark">{{ appointment.status }}</span>
+                          {% elif appointment.status == "Cancelled" %}
+                          <span class="badge bg-danger text-dark">{{ appointment.status }}</span>
+                          {% endif %}
+                      </td>
+                      <td>
+                          <form method="post">
+                              {% csrf_token %}
+                              <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
+                              {% if appointment.status == 'Pending' %}
+                                  <button type="submit" name="status" value="Confirmed" class="btn btn-success btn-sm">Confirm</button>
+                                  <button type="submit" name="status" value="Cancelled" class="btn btn-danger btn-sm">Cancel</button>
+                              {% elif appointment.status == 'Confirmed' %}
+                                  <a href="{% url 'prescriptions:add_prescription' appointment.id %}" class="btn custom-btn">Add Prescription</a>
+
+
+                              {% else %}
+                                  <span>Cannot change status</span>
+                              {% endif %}
+                          </form>
+                      </td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+      {% else %}
+      <p class="text-center">No appointments found.</p>
+      {% endif %}
+  </div>
+</section>
+{% endblock %}

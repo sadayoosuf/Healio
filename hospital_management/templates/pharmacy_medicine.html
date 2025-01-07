@@ -1,0 +1,66 @@
+{% extends 'pharmacy_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!--header-->
+
+<section class="page-title bg-1">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">Medicines</span>
+          <h1 class="text-capitalize mb-5 text-lg">{{cat.name}}</h1>
+
+<!--            <ul class="list-inline breadcumb-nav">-->
+<!--            <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>-->
+<!--            <li class="list-inline-item"><span class="text-white">/</span></li>-->
+<!--            <li class="list-inline-item"><a href="#" class="text-white-50">Doctor Details</a></li>-->
+<!--          </ul> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Category title and description-->
+<section class="section doctors">
+  <div class="container">
+  	  <div class="row justify-content-center">
+             <div class="col-lg-6 text-center">
+                <div class="section-title">
+                    <h2>{{cat.name}}</h2>
+                    <div class="divider mx-auto my-4"></div>
+                    <p>{{cat.description}}</p>
+                </div>
+            </div>
+      </div>
+
+<!--medicines card display-->
+
+      <div class="row shuffle-wrapper portfolio-gallery">
+    {% for i in medicine %}
+
+      <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="[&quot;cat4&quot;]">
+        	<div class="position-relative doctor-inner-box">
+		        <div class="doctor-profile">
+		        	<div class="doctor-img">
+		               <img src="{{i.image.url}}" alt="doctor-image" class="img-fluid w-100" style="height:300px;">
+		            </div>
+	            </div>
+                <div class="content mt-3">
+                	<h4 class="mb-0"><a href="{% url 'pharmacy:medicinesdetail' i.id %}">{{i.name}}</a></h4>
+                	<p>Rs: {{i.price}}</p>
+                </div>
+	        </div>
+      </div>
+        {% endfor %}
+
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

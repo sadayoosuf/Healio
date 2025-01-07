@@ -1,0 +1,117 @@
+{% extends 'pharmacy_base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="page-title bg-primary">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">ADD NEW MEDICINE</span>
+          <h1 class="text-capitalize mb-5 text-lg">Add Medicines to Your Inventory</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <div class="appoinment-wrap mt-5 pl-lg-5">
+          <h2 class="mb-2 title-color">Add a New Medicine</h2>
+          <p class="mb-4">Fill in the form below to add a new medicine to the pharmacy. Ensure all fields are completed correctly.</p>
+
+          {% if error %}
+          <div class="alert alert-danger">
+            {{ error }}
+          </div>
+          {% endif %}
+
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="row">
+              <!-- Medicine Name -->
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label">Medicine Name</label>
+                  <input type="text" class="form-control" name="n" placeholder="Enter Medicine Name" required>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label">Description</label>
+                  <textarea class="form-control" name="d" rows="4" placeholder="Add a brief description" required></textarea>
+                </div>
+              </div>
+
+              <!-- Image -->
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label">Upload Image</label>
+                  <input type="file" class="form-control" name="i">
+                </div>
+              </div>
+
+              <!-- Price -->
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Price</label>
+                  <input type="number" class="form-control" name="p" placeholder="Enter Price" step="0.01" required>
+                </div>
+              </div>
+
+              <!-- Stock -->
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Stock</label>
+                  <input type="number" class="form-control" name="s" placeholder="Enter Stock Quantity" min="0" required>
+                </div>
+              </div>
+
+              <!-- Expiry Date -->
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Expiry Date</label>
+                  <input type="date" class="form-control" name="e" required>
+                </div>
+              </div>
+
+              <!-- Manufacturer -->
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Manufacturer</label>
+                  <input type="text" class="form-control" name="m" placeholder="Enter Manufacturer Name" required>
+                </div>
+              </div>
+
+              <!-- Category -->
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label">Category</label>
+
+                  <select  name="c">
+                    <option value="" >Select a category</option>
+                    {% for i in links1 %}
+                      <option value="{{ i.name }}">{{ i.name }}</option>
+                    {% endfor %}
+                  </select>
+
+                </div>
+              </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-main btn-round-full">Add Medicine</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

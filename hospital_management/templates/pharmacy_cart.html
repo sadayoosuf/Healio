@@ -1,0 +1,163 @@
+{% extends 'pharmacy_base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+.table th, .table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table thead th {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.table tbody td {
+    color: #6F8BA4;
+    font-size: 14px;
+}
+
+.table img {
+    max-height: 80px;
+    max-width: 80px;
+    object-fit: contain;
+}
+
+.btn-outline-danger, .btn-outline-success {
+    font-size: 14px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-outline-danger:hover, .btn-outline-success:hover {
+    background-color: #D49BC3;
+    color: white;
+}
+
+/* Custom styling for Proceed to Checkout button */
+.btn-checkout {
+    background-color: #257180;
+    color: white;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 50px;  /* Pill shape */
+    display: inline-flex;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-checkout:hover {
+    background-color: #003C43;  /* Danger color on hover */
+    color: white;
+}
+
+/* Custom styling for Continue Shopping button */
+.btn-continue-shopping {
+    background-color: #003C43;
+    color: black;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 50px;  /* Pill shape */
+    display: inline-flex;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-continue-shopping:hover {
+    background-color: #257180;  /* Lighter purple color on hover */
+    color: black;
+}
+</style>
+
+<section class="page-title bg-1">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">Your Shopping Cart</span>
+          <h1 class="text-capitalize mb-5 text-lg">Cart Details</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section cart">
+  <div class="container">
+      <div class="row justify-content-center">
+          <div class="col-lg-6 text-center">
+              <div class="section-title">
+                  <h2>Your Selected Items</h2>
+                  <div class="divider mx-auto my-4"></div>
+                  <p>Review the medicines you have added to your shopping cart. You can update quantities, remove items, or proceed to checkout directly from this page.</p>
+              </div>
+          </div>
+      </div>
+
+      {% if cart %}
+      <div class="table-responsive">
+          <table class="table table-striped table-hover">
+              <thead style="background-color: #257180; color: white;">
+                  <tr>
+                      <th>#</th>
+                      <th>Medicine</th>
+                      <th>Price</th>
+                      <th>Quantity</th>
+                      <th>Total</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for item in cart %}
+                  <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <td>
+                          <img src="{{ item.medicine.image.url }}" alt="{{ item.medicine.name }}">
+                          <br>
+                          {{ item.medicine.name }}
+                      </td>
+                      <td>{{ item.medicine.price }}</td>
+                      <td>
+                          <div class="d-flex justify-content-center align-items-center">
+                              <a href="{% url 'pharmacy:cartremove' item.medicine.id %}" class="btn btn-sm btn-outline-danger">-</a>
+                              <input type="text" value="{{ item.quantity }}" readonly class="mx-2 text-center" style="width: 50px;">
+                              <a href="{% url 'pharmacy:addtocart' item.medicine.id %}" class="btn btn-sm btn-outline-success">+</a>
+                          </div>
+                      </td>
+                      <td>{{ item.subtotal }}</td>
+                      <td>
+                          <a href="{% url 'pharmacy:cartdelete' item.medicine.id %}" class="btn btn-sm btn-danger">Remove</a>
+                      </td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+
+      <div class="row justify-content-end mt-4">
+          <div class="col-lg-4">
+              <div class="cart-total text-center bg-light p-3 rounded">
+                  <h4>Total: {{ total }}</h4>
+                  <a href="{% url 'pharmacy:orderform' %}" class="btn btn-checkout mt-2">Proceed to Checkout</a>
+                  <!-- Continue Shopping Button -->
+                  <a href="{% url 'pharmacy:category' %}" class="btn btn-checkout mt-3">Continue Shopping</a>
+              </div>
+          </div>
+      </div>
+      {% else %}
+      <p class="text-center text-danger">Your cart is empty.</p>
+      {% endif %}
+  </div>
+</section>
+{% endblock %}

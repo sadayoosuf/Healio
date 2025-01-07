@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="page-title bg-primary">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">Doctor Registration</span>
+          <h1 class="text-capitalize mb-5 text-lg">Register as Doctor</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <div class="appoinment-wrap mt-5 pl-lg-5">
+          <h2 class="mb-2 title-color">Create your Doctor Account</h2>
+          <p class="mb-4">Fill in the form below to register as a Doctor. Ensure all fields are completed correctly.</p>
+
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+              <!-- Username and Password fields -->
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label">Username</label>
+                  <input type="text" class="form-control" name="u" placeholder="Enter username" required>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Password</label>
+                  <input type="password" class="form-control" name="p" placeholder="Enter password" required>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Confirm Password</label>
+                  <input type="password" class="form-control" name="cp" placeholder="Confirm password" required>
+                </div>
+              </div>
+
+              <!-- Name fields -->
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">First Name</label>
+                  <input type="text" class="form-control" name="f" placeholder="Enter first name" required>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Last Name</label>
+                  <input type="text" class="form-control" name="l" placeholder="Enter last name" required>
+                </div>
+              </div>
+
+              <!-- Email, Phone, Specialization fields -->
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" name="e" placeholder="Enter email" required>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Phone</label>
+                  <input type="number" class="form-control" name="n" placeholder="Enter phone number" required>
+                </div>
+              </div>
+
+              <!-- Department and Specialization fields -->
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Specialization</label>
+                  <input type="text" class="form-control" name="specialization" placeholder="Enter specialization" required>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Department</label>
+                  <select class="form-control" name="department" required>
+                    <option value="" selected>-- Select Department --</option>
+                    {% for department in departments %}
+                      <option value="{{ department.id }}">{{ department.name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <!-- Description and Image fields -->
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label">Description</label>
+                  <textarea class="form-control" name="description" placeholder="Enter a short description about yourself"></textarea>
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label">Profile Image</label>
+                  <input type="file" class="form-control" name="image">
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-main btn-round-full">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

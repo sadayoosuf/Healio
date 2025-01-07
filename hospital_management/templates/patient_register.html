@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="page-title bg-primary">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">Patient Registration</span>
+          <h1 class="text-capitalize mb-5 text-lg">Register as Patient</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <div class="appoinment-wrap mt-5 pl-lg-5">
+          <h2 class="mb-2 title-color">Create your Patient Account</h2>
+          <p class="mb-4">Fill in the form below to register as a Patient. Ensure all fields are completed correctly.</p>
+
+          <form method="POST">
+            {% csrf_token %}
+
+            <div class="row">
+              <!-- Username field in one line -->
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label">Username</label>
+                  <input type="text" class="form-control" name="u" placeholder="Enter username">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Password</label>
+                  <input type="password" class="form-control" name="p" placeholder="Enter password">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Confirm Password</label>
+                  <input type="password" class="form-control" name="cp" placeholder="Confirm password">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">First Name</label>
+                  <input type="text" class="form-control" name="f" placeholder="Enter first name">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Last Name</label>
+                  <input type="text" class="form-control" name="l" placeholder="Enter last name">
+                </div>
+              </div>
+
+              <!-- Email and Phone fields in one line -->
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" name="e" placeholder="Enter email">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Phone</label>
+                  <input type="number" class="form-control" name="n" placeholder="Enter phone number">
+                </div>
+              </div>
+
+              <!-- Address field in one line -->
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label">Address</label>
+                  <input type="text" class="form-control" name="a" placeholder="Enter address">
+                </div>
+              </div>
+
+              <!-- New fields -->
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Date of Birth</label>
+                  <input type="date" class="form-control" name="dob" placeholder="Enter date of birth">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Gender</label>
+                  <select class="form-control" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label">Primary Doctor</label>
+                  <select class="form-control" name="primary_doctor">
+                    <option value="" selected>-- Select Primary Doctor (Optional) --</option>
+                    <!-- Assuming you dynamically populate this list with doctors -->
+                    {% for doctor in doctors %}
+                      <option value="{{ doctor.id }}">Dr. {{ doctor.name }} ,{{doctor.department}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-main btn-round-full">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

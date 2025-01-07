@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <title>Healio</title>
+
+  <!-- Mobile Specific Metas
+  ================================================== -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Health Care Medical Html5 Template">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="author" content="Themefisher">
+  <meta name="generator" content="Themefisher Novena HTML Template v1.0">
+
+  <!-- theme meta -->
+  <meta name="theme-name" content="novena" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="{% static '/images/favicon.png' %}" />
+
+  <!--
+  Essential stylesheets
+  =====================================-->
+  <link rel="stylesheet" href="{% static 'plugins/bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'plugins/icofont/icofont.min.css' %}">
+  <link rel="stylesheet" href="{% static 'plugins/slick-carousel/slick/slick.css' %}">
+  <link rel="stylesheet" href="{% static 'plugins/slick-carousel/slick/slick-theme.css' %}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+  <style>
+    .navbar .search-bar {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 15px;
+}
+
+.navbar .search-bar input {
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: 14px;
+    outline: none;
+    width: 200px;
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar .search-bar input:focus {
+    border-color: #257180;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.navbar .search-bar button {
+    border: none;
+    background-color: #257180;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    margin-left: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.navbar .search-bar button:hover {
+    background-color: #003C43;
+    cursor: pointer;
+}
+
+  </style>
+
+</head>
+
+<body id="top">
+
+<header>
+<!--	<div class="header-top-bar">-->
+<!--		<div class="container">-->
+<!--			<div class="row align-items-center">-->
+<!--				<div class="col-lg-6">-->
+<!--					<ul class="top-bar-info list-inline-item pl-0 mb-0">-->
+<!--						<li class="list-inline-item"><a href="mailto:support@gmail.com"><i class="icofont-support-faq mr-2"></i>support@healio.com</a></li>-->
+<!--						<li class="list-inline-item"><i class="icofont-location-pin mr-2"></i>Address kochi,Kakkanad</li>-->
+<!--					</ul>-->
+<!--				</div>-->
+<!--				<div class="col-lg-6">-->
+<!--					<div class="text-lg-right top-right-bar mt-2 mt-lg-0">-->
+<!--						<a href="tel:+23-345-67890">-->
+<!--							<span>Call Now : </span>-->
+<!--							<span class="h4">9400130233</span>-->
+<!--						</a>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>-->
+	<nav class="navbar navbar-expand-lg navigation" id="navbar">
+		<div class="container">
+			<a class="navbar-brand" href="index.html">
+				<img src="{% static 'images/hlogo2.jpg' %}" alt="" class="img-fluid">
+			</a>
+
+			<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarmain"
+				aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="icofont-navigation-menu"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarmain">
+				<ul class="navbar-nav ml-auto">
+                    <li class="nav-item active"><a class="nav-link" href="{% url 'doctors:department' %}">Home</a></li>
+					<li class="nav-item active"><a class="nav-link" href="{% url 'pharmacy:category' %}">pharmacy</a></li>
+
+					<li class="nav-item dropdown">
+    					<a class="nav-link dropdown-toggle" href="department.html" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Medicines Category<i class="icofont-thin-down"></i></a>
+							<ul class="dropdown-menu" aria-labelledby="dropdown02">
+								{% for i in links1 %}
+									<li><a class="dropdown-item" href="{% url 'pharmacy:medicines' i.id %}">{{ i.name }}</a></li>
+								{% endfor %}
+							</ul>
+					</li>
+
+					{% if user.is_authenticated and user.is_admin %}
+
+						<li class="nav-item"><a class="nav-link" href="{% url 'pharmacy:addcat' %}">Add Category</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'pharmacy:addmed' %}">Add Medicine</a></li>
+					{% endif %}
+
+
+                    <div class="search-bar">
+						<form class="d-flex" method="POST" action="{% url 'pharmacy:search' %}">
+							{% csrf_token %}
+							<input class="form-control" type="search" name="q" placeholder="Search" aria-label="Search">
+							<button class="btn btn-primary" type="submit">Search</button>
+						</form>
+                    </div>
+
+					{% if user.is_authenticated and user.is_patient %}
+						<li class="nav-item"><a class="nav-link" href="{% url 'pharmacy:cartview' %}"><i class="fa-solid fa-cart-shopping"></i><sup class="fw-bold">{{c}}</sup></a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'pharmacy:orderview' %}">Orders</a></li>
+					{% endif %}
+
+
+				</ul>
+			</div>
+		</div>
+	</nav>
+</header>
+
+{% block content %}
+{% endblock %}
+
+<!-- footer Start -->
+<footer class="footer section gray-bg">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4 mr-auto col-sm-6">
+				<div class="widget mb-5 mb-lg-0">
+					<div class="logo mb-4">
+						<img src="images/logo.png" alt="" class="img-fluid">
+					</div>
+					<p>At Healio, we are dedicated to simplifying healthcare. Our platform connects patients, doctors, and administrators, ensuring seamless appointments, efficient record management, and accessible care. Experience healthcare made effortless with Healio!</p>
+
+					<ul class="list-inline footer-socials mt-4">
+						<li class="list-inline-item">
+							<a href="https://www.facebook.com/themefisher"><i class="icofont-facebook"></i></a>
+						</li>
+						<li class="list-inline-item">
+							<a href="https://x.com/?lang=en"><i class="icofont-twitter"></i></a>
+						</li>
+						<li class="list-inline-item">
+							<a href="www.linkedin.com/in/sada-yoosuf"><i class="icofont-linkedin"></i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="col-lg-2 col-md-6 col-sm-6">
+				<div class="widget mb-5 mb-lg-0">
+					<h4 class="text-capitalize mb-3">Department</h4>
+					<div class="divider mb-4"></div>
+
+					<ul class="list-unstyled footer-menu lh-35">
+						{% for i in links %}
+							<li><a class="dropdown-item" href="{% url 'doctors:doctor' i.id %}">{{ i.name }}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+
+			<div class="col-lg-2 col-md-6 col-sm-6">
+				<div class="widget mb-5 mb-lg-0">
+					<h4 class="text-capitalize mb-3">Support</h4>
+					<div class="divider mb-4"></div>
+
+					<ul class="list-unstyled footer-menu lh-35">
+						<li><a href="#!">Terms & Conditions</a></li>
+						<li><a href="#!">Privacy Policy</a></li>
+						<li><a href="#!">Company Support </a></li>
+						<li><a href="#!">FAQuestions</a></li>
+						<li><a href="#!">Company Licence</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="widget widget-contact mb-5 mb-lg-0">
+					<h4 class="text-capitalize mb-3">Get in Touch</h4>
+					<div class="divider mb-4"></div>
+
+					<div class="footer-contact-block mb-4">
+						<div class="icon d-flex align-items-center">
+							<i class="icofont-email mr-3"></i>
+							<span class="h6 mb-0">Support Available for 24/7</span>
+						</div>
+						<h4 class="mt-2"><a href="yoosufsada@email.com">Healio@email.com</a></h4>
+					</div>
+
+					<div class="footer-contact-block">
+						<div class="icon d-flex align-items-center">
+							<i class="icofont-support mr-3"></i>
+							<span class="h6 mb-0">Mon to Fri : 08:30 - 18:00</span>
+						</div>
+						<h4 class="mt-2"><a href="tel:+23-345-67890">+91-94-00-233-130</a></h4>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer-btm py-4 mt-5">
+			<div class="row align-items-center justify-content-between">
+				<div class="col-lg-6">
+					<div class="copyright">
+						Copyright &copy; 2025, Designed &amp; Developed for <a href="https://themefisher.com/">Healio</a>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col-lg-4">
+					<a class="backtop scroll-top-to" href="#top">
+						<i class="icofont-long-arrow-up"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+
+    <!--
+    Essential Scripts
+    =====================================-->
+    <script src="{% static 'plugins/jquery/jquery.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static 'plugins/slick-carousel/slick/slick.min.js' %}"></script>
+    <script src="{% static 'plugins/shuffle/shuffle.min.js' %}"></script>
+
+    <!-- Google Map -->
+    <script src="{% static 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAkeLMlsiwzp6b3Gnaxd86lvakimwGA6UA' %}"></script>
+    <script src="{% static 'plugins/google-map/gmap.js' %}"></script>
+
+    <script src="{% static 'js/script.js' %}"></script>
+
+  </body>
+  </html>

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="page-title bg-1">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="block text-center">
+                        <span class="text-white">View Prescriptions</span>
+                        <h1 class="text-capitalize mb-5 text-lg">Your Prescription History</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section doctors">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <div class="section-title">
+                        <h2>Prescription History</h2>
+                        <div class="divider mx-auto my-4"></div>
+                        <p>Below is a detailed record of all the prescriptions provided to you by your doctor.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead style="background-color: #257180; color: white;">
+                        <tr>
+                            <th>Doctor</th>
+                            <th>Admission Required</th>
+                            <th>Revisit Required</th>
+                            <th>Lab Tests</th>
+                            <th>Medication Details</th>
+                            <th>Dosage Instructions</th>
+                            <th>Prescription Date</th>
+                            <th>Payment Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prescription in prescriptions %}
+                        <tr>
+                            <td>{{ prescription.doctor.first_name }} {{ prescription.doctor.last_name }}</td>
+                            <td>{{ prescription.admission_required|yesno:"Yes,No" }}</td>
+                            <td>{{ prescription.revisit_required|yesno:"Yes,No" }}</td>
+                            <td>{{ prescription.lab_tests }}</td>
+                            <td>{{ prescription.medication_details }}</td>
+                            <td>{{ prescription.dosage_instructions }}</td>
+                            <td>{{ prescription.prescription_date|date:"Y-m-d" }}</td>
+                            <td>{{ prescription.prescription_amount }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center">No prescriptions found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+{% endblock %}

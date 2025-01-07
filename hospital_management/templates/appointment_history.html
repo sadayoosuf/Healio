@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+.table th, .table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table thead th {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.table tbody td {
+    color: #6F8BA4;
+    font-size: 14px;
+}
+</style>
+
+<section class="page-title bg-1">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">View your Bookings Confirmation Details</span>
+          <h1 class="text-capitalize mb-5 text-lg">Appointment History</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section doctors">
+  <div class="container">
+      <div class="row justify-content-center">
+          <div class="col-lg-6 text-center">
+              <div class="section-title">
+                  <h2>Your Appointments</h2>
+                  <div class="divider mx-auto my-4"></div>
+                  <p>View a detailed record of all your past and upcoming appointments with doctors. This section provides information about the doctor, department, date, time, and any additional notes or messages related to your appointments. Easily track your healthcare visits and stay updated on future appointments.</p>
+              </div>
+          </div>
+      </div>
+
+      {% if appointments %}
+      <div class="table-responsive">
+          <table class="table table-striped table-hover">
+              <thead style="background-color: #257180; color: white;">
+                  <tr>
+                      <th>#</th>
+                      <th>Doctor</th>
+                      <th>Department</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Message</th>
+                      <th>Status</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for appointment in appointments %}
+                  <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <td>{{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</td>
+                      <td>{{ appointment.department.name }}</td>
+                      <td>{{ appointment.date }}</td>
+                      <td>{{ appointment.time }}</td>
+                      <td>{{ appointment.message }}</td>
+                      <td>
+                          {% if appointment.status == "Pending" %}
+                          <span class="badge bg-warning text-dark">{{ appointment.status }}</span>
+                          {% elif appointment.status == "Confirmed" %}
+                          <span class="badge bg-success text-dark">{{ appointment.status }}</span>
+                          {% elif appointment.status == "Cancelled" %}
+                          <span class="badge bg-danger">{{ appointment.status }}</span>
+                          {% endif %}
+                      </td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+      {% else %}
+      <p class="text-center text-danger">No appointment history found.</p>
+      {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -214,7 +214,7 @@ def payment_status(request,u):
 
 def order_view(request):
     u=request.user
-    o=OrderDetails.objects.filter(user=u)
+    o=OrderDetails.objects.filter(user=u).order_by('-ordered_date')
 
     return render(request,'pharmacy_orderview.html',{'orders':o})
 

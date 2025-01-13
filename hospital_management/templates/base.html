@@ -30,6 +30,52 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+	  <style>
+    .search-bar {
+      width: 100%;
+      padding: 20px;
+      background-color: #f7efed;
+      display: flex;
+      justify-content: center;
+    }
+
+    .search-bar form {
+      width: 80%;
+      max-width: 800px;
+      display: flex;
+    }
+
+    .search-bar input {
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      padding: 5px 15px;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .search-bar input:focus {
+      border-color: #257180;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .search-bar button {
+      border: none;
+      background-color: #257180;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      margin-left: 5px;
+      font-size: 14px;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .search-bar button:hover {
+      background-color: #003C43;
+      cursor: pointer;
+    }
+  </style>
 
 
 </head>
@@ -86,7 +132,7 @@
 
 					 {% if user.is_authenticated and user.is_admin %}
 						<li class="nav-item"><a class="nav-link" href="{% url 'doctors:add_department' %}">Add Department</a></li>
-						<li class="nav-item"><a class="nav-link" href="{% url 'doctors:add_doctor' %}">Add Doctor</a></li>
+<!--						<li class="nav-item"><a class="nav-link" href="{% url 'doctors:add_doctor' %}">Add Doctor</a></li>-->
 
 					{% endif %}
 
@@ -121,6 +167,7 @@
 
 						<li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}">Login</a></li>
 					{% else %}
+
 						<li class="nav-item"><a class="nav-link" href="{% url 'users:logout' %}">Logout</a></li>
 					{% endif %}
 
@@ -129,7 +176,20 @@
 			</div>
 		</div>
 	</nav>
+
+	<!-- Search Bar -->
+    {% if user.is_authenticated %}
+    <div class="search-bar">
+						<form class="d-flex" method="POST" action="{% url 'doctors:searchdoctor' %}">
+							{% csrf_token %}
+							<input class="form-control" type="search" name="q" placeholder="Search" aria-label="Search">
+							<button class="btn btn-primary" type="submit">Search</button>
+						</form>
+                    </div>
+    {% endif %}
 </header>
+
+
 
 {% block content %}
 {% endblock %}
@@ -147,13 +207,13 @@
 
 					<ul class="list-inline footer-socials mt-4">
 						<li class="list-inline-item">
-							<a href="https://www.facebook.com/themefisher"><i class="icofont-facebook"></i></a>
+							<a href="https://www.facebook.com/"><i class="icofont-facebook"></i></a>
 						</li>
 						<li class="list-inline-item">
 							<a href="https://x.com/?lang=en"><i class="icofont-twitter"></i></a>
 						</li>
 						<li class="list-inline-item">
-							<a href="www.linkedin.com/in/sada-yoosuf"><i class="icofont-linkedin"></i></a>
+							<a href="https://www.linkedin.com/in/sada-yoosuf/"><i class="icofont-linkedin"></i></a>
 						</li>
 					</ul>
 				</div>

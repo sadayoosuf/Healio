@@ -16,7 +16,6 @@ def add_prescription(request, appointment_id):
 
         prescription_amount = request.POST.get('prescription_amount')
 
-        # Create the prescription
         Prescription.objects.create(
             appointment=appointment,
             doctor=appointment.doctor,
@@ -29,26 +28,20 @@ def add_prescription(request, appointment_id):
             prescription_amount=prescription_amount,
         )
 
-        # Redirect back to the appointments list after saving the prescription
         return redirect('appointments:doctor_appointments')
 
     return render(request, 'add_prescription.html', {'appointment': appointment})
 
 # @login_required
 def doctor_prescriptions(request):
-    # Fetch all prescriptions for the logged-in doctor
-    doctor = request.user.doctor  # Assuming the user is linked to a doctor instance
+    doctor = request.user.doctor
     prescriptions = Prescription.objects.filter(doctor=doctor)
 
-    # Pass prescriptions to the template
     return render(request, 'doctor_prescriptions.html', {'prescriptions': prescriptions})
 
 # @login_required
 def patient_prescriptions(request):
-    # Get the currently logged-in patient
-    patient = request.user.patient_profile  # Assuming the user has a related patient profile
-
-    # Get all prescriptions for this patient
+    patient = request.user.patient_profile
     prescriptions = Prescription.objects.filter(patient=patient)
 
     return render(request, 'patient_prescriptions.html', {'prescriptions': prescriptions})

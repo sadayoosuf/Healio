@@ -40,13 +40,13 @@
 
 
 
-						<ul class="list-inline mt-4 doctor-social-links">
-							<li class="list-inline-item"><a href="#!"><i class="icofont-facebook"></i></a></li>
-							<li class="list-inline-item"><a href="#!"><i class="icofont-twitter"></i></a></li>
-							<li class="list-inline-item"><a href="#!"><i class="icofont-skype"></i></a></li>
-							<li class="list-inline-item"><a href="#!"><i class="icofont-linkedin"></i></a></li>
-							<li class="list-inline-item"><a href="#!"><i class="icofont-pinterest"></i></a></li>
-						</ul>
+<!--						<ul class="list-inline mt-4 doctor-social-links">-->
+<!--							<li class="list-inline-item"><a href="#!"><i class="icofont-facebook"></i></a></li>-->
+<!--							<li class="list-inline-item"><a href="#!"><i class="icofont-twitter"></i></a></li>-->
+<!--							<li class="list-inline-item"><a href="#!"><i class="icofont-skype"></i></a></li>-->
+<!--							<li class="list-inline-item"><a href="#!"><i class="icofont-linkedin"></i></a></li>-->
+<!--							<li class="list-inline-item"><a href="#!"><i class="icofont-pinterest"></i></a></li>-->
+<!--						</ul>-->
 					</div>
 				</div>
 			</div>
@@ -59,9 +59,9 @@
                     <p>Manufacture: {{medicine.manufacturer}}</p>
                     <p>Expiry date: {{medicine.expiry_date}}</p>
                     <p>Stock: {{medicine.stock}}</p>
-                    <p>Available: {{medicine.available}}</p>
+<!--                    <p>Available: {{medicine.available}}</p>-->
 
-					{% if user.is_superuser == True %}
+					{% if user.is_admin == True %}
 						  {% if medicine.stock > 0 %}
 							<h5>medicine In stock</h5>
 							<a href="{% url 'pharmacy:addstock' medicine.id %}" class="btn btn-main-2 btn-round-full mt-3">ADD STOCK<i

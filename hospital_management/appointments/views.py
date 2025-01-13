@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect , get_object_or_404
 from appointments.models import Appointment
 from doctors.models import Doctor, Department
 # from django.contrib.auth.decorators import login_required
 
 def book_appointment(request):
-    # Fetch all doctors
+
     doctors = Doctor.objects.all()
 
     if request.method == 'POST':
@@ -20,14 +20,12 @@ def book_appointment(request):
         doc = Doctor.objects.get(id=doctor_name)
 
         try:
-            # Access the patient's profile using the related_name 'patient_profile'
-            patient = request.user.patient_profile  # Correctly accessing the Patient profile
+            patient = request.user.patient_profile
         except AttributeError:
             # Handle the case where the user is not a patient
-            patient = None  # You can handle this scenario as needed (e.g., showing an error message)
+            patient = None
 
         if patient:
-            # Create the appointment only if the user has a patient profile
             a = Appointment.objects.create(
                 patient=patient,
                 date=date,
@@ -39,9 +37,9 @@ def book_appointment(request):
             )
             a.save()
 
-            return redirect('appointments:appointment_history')  # Redirect after saving
+            return redirect('appointments:appointment_history')
 
-    # Provide the user's full name for pre-filling
+
     full_name = f"{request.user.first_name} {request.user.last_name}"
     return render(request, 'appointment.html', {'full_name': full_name, 'doctors': doctors})
 
@@ -50,7 +48,6 @@ def appointment_history(request):
     try:
         # Access the patient's profile using the related_name
         patient = request.user.patient_profile
-        # Fetch the appointments for the logged-in patient
         appointments = Appointment.objects.filter(patient=patient).order_by('-date', '-time')
     except AttributeError:
         # Handle the case where the user is not a patient
@@ -60,7 +57,6 @@ def appointment_history(request):
 
 
 def doctor_appointments(request):
-    # Fetch appointments for the logged-in doctor
     appointments = Appointment.objects.filter(doctor=request.user.doctor).order_by('-date', '-time')
 
     if request.method == 'POST':
@@ -70,6 +66,47 @@ def doctor_appointments(request):
         appointment = Appointment.objects.get(id=appointment_id)
         appointment.status = new_status
         appointment.save()
-        return redirect('appointments:doctor_appointments')  # Redirect to refresh the page
+        return redirect('appointments:doctor_appointments')
 
     return render(request, 'doctor_appointments.html', {'appointments': appointments})
+
+# Edit Appointment View
+def edit_appointment(request, appointment_id):
+    appointment = get_object_or_404(Appointment, id=appointment_id)
+    doctors = Doctor.objects.all()
+
+    if request.method == 'POST':
+        department_name = request.POST['d']
+        doctor_name = request.POST['doc']
+        date = request.POST['date']
+        time = request.POST['time']
+        phone = request.POST['phone']
+        message = request.POST['message']
+
+        selected_department = Department.objects.get(name=department_name)
+        doc = Doctor.objects.get(id=doctor_name)
+
+        appointment.department = selected_department
+        appointment.doctor = doc
+        appointment.date = date
+        appointment.time = time
+        appointment.phone_number = phone
+        appointment.message = message
+        appointment.save()
+
+        return redirect('appointments:appointment_history')
+
+    return render(request, 'edit_appointment.html', {
+        'appointment': appointment,
+        'doctors': doctors
+    })
+
+#delete appointment
+def delete_appointment(request, appointment_id):
+    appointment = get_object_or_404(Appointment, id=appointment_id)
+
+    if request.method == 'POST':
+        appointment.delete()
+        return redirect('appointments:appointment_history')
+
+    return render(request, 'delete_appointment.html', {'appointment': appointment})

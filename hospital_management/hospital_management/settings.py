@@ -43,8 +43,7 @@ INSTALLED_APPS = [
     'appointments',
     'prescriptions',
     'pharmacy',
-    'billing',
-    'labs','razorpay',
+    'razorpay',
 
 ]
 

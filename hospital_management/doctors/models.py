@@ -12,6 +12,7 @@ class Department(models.Model):
 class Doctor(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE,null=True)
     name = models.CharField(max_length=100, unique=True,blank=True, null=True)
+    # password = models.CharField(max_length=150, null=True, blank=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     description = models.TextField(blank=True, null=True)

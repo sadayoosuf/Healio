@@ -1,0 +1,63 @@
+{% extends 'pharmacy_base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .btn-cancel {
+  background-color: #257180;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #003C43;
+}
+
+</style>
+
+<section class="page-title bg-danger">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">DELETE CATEGORY</span>
+          <h1 class="text-capitalize mb-5 text-lg">Are You Sure?</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <div class="appoinment-wrap mt-5 pl-lg-5">
+          <h2 class="mb-2 title-color">Confirm Deletion</h2>
+          <p class="mb-4">You are about to delete the following category. Please confirm your action.</p>
+
+          <div class="category-details">
+            <h4 class="title-color">Category Name: {{ category.name }}</h4>
+          </div>
+
+          <form method="POST">
+            {% csrf_token %}
+
+            <div class="row">
+              <div class="col-lg-12">
+                <button type="submit" class="btn btn-danger btn-round-full">Yes, Delete</button>
+                <a href="{% url 'pharmacy:category' %}" class="btn btn-cancel btn-round-full">Cancel</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

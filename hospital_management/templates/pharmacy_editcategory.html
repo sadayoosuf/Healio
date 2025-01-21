@@ -1,0 +1,61 @@
+{% extends 'pharmacy_base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="page-title bg-primary">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">EDIT CATEGORY</span>
+          <h1 class="text-capitalize mb-5 text-lg">Update Your Inventory</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <div class="appoinment-wrap mt-5 pl-lg-5">
+          <h2 class="mb-2 title-color">Edit Category Details</h2>
+          <p class="mb-4">Update the category information using the form below. Make sure to save the changes after editing.</p>
+
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label">Category Name</label>
+                  <input type="text" class="form-control" name="n" value="{{ category.name }}" required>
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label">Description</label>
+                  <textarea class="form-control" name="d" rows="4" required>{{ category.description }}</textarea>
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label">Replace Image (Optional)</label>
+                  <img src="{{category.image.url}}" height="100px" width="100px">
+                  <input type="file" class="form-control" name="i">
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-main btn-round-full">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -31,6 +31,29 @@ def addcategory(request):
         return redirect('pharmacy:category')
     return render(request,'pharmacy_addcategory.html')
 
+def edit_category(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+
+    if request.method == 'POST':
+        category.name = request.POST['n']
+        category.description = request.POST['d']
+        if 'i' in request.FILES:
+            category.image = request.FILES['i']
+        category.save()
+        return redirect('pharmacy:category')
+
+    return render(request, 'pharmacy_editcategory.html', {'category': category})
+
+
+def delete_category(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    if request.method == 'POST':
+        category.delete()
+        return redirect('pharmacy:category')
+
+    return render(request, 'pharmacy_confirm_delete.html', {'category': category})
+
+
 def addmedicine(request):
     if request.method == 'POST':
         name = request.POST['n']

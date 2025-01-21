@@ -31,6 +31,22 @@ def add_department(request):
         return redirect('doctors:department')
     return render(request,'add_department.html')
 
+def edit_department(request, id):
+    department = Department.objects.get(id=id)
+    if request.method == 'POST':
+        department.name = request.POST['n']
+        department.description = request.POST['d']
+        if 'i' in request.FILES:
+            department.image = request.FILES['i']
+        department.save()
+        return redirect('doctors:department')
+    return render(request, 'edit_department.html', {'department': department})
+
+def delete_department(request, id):
+    department = Department.objects.get(id=id)
+    department.delete()
+    return redirect('doctors:department')
+
 def add_doctor(request):
     if request.method=='POST':
         name= request.POST['n']
@@ -63,3 +79,4 @@ def search_doctor(request):
             d=Doctor.objects.filter(Q(name__icontains=query) | Q(description__icontains=query) | Q(specialization__icontains=query))
 
     return render(request,'doctor_search.html',{'doctor':d,'q':query})
+

@@ -35,6 +35,8 @@ urlpatterns = [
     path('orderview',views.order_view,name="orderview"),
     path('addstock/<int:m>',views.add_stock,name="addstock"),
     path('search/', views.search_medicine, name="search"),
+    path('editcategory/<int:category_id>/', views.edit_category, name='edit_category'),
+    path('deletecategory/<int:category_id>/', views.delete_category, name='delete_category'),
 
 
 ]

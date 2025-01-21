@@ -122,6 +122,13 @@
 						<h4 class="mt-4 mb-2 title-color">{{i.name}}</h4>
 						<p class="mb-4">{{i.description}}</p>
 						<a href="{% url 'pharmacy:medicines' i.id %}" class="read-more">Medicine<i class="icofont-simple-right ml-2"></i></a>
+						{% if user.is_admin == True %}
+
+
+							<a href="{% url 'pharmacy:edit_category' i.id %}" class="read-more">Edit<i class="icofont-simple-right ml-2"></i></a>
+							<a href="{% url 'pharmacy:delete_category' i.id %}" class="read-more">Delete<i class="icofont-simple-right ml-2"></i></a>
+						{% endif %}
+
 					</div>
 				</div>
 			</div>

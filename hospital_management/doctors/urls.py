@@ -28,6 +28,8 @@ urlpatterns = [
     path('adddepartment',views.add_department,name="add_department"),
     path('adddoctor',views.add_doctor,name="add_doctor"),
     path('searchdoctor/', views.search_doctor, name="searchdoctor"),
+    path('edit-department/<int:id>/', views.edit_department, name="edit_department"),
+    path('delete-department/<int:id>/', views.delete_department, name="delete_department"),
 
 
 ]
